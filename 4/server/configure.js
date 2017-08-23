@@ -1,5 +1,5 @@
 var path = require('path'),
-    //routes = require('./routes'),
+    routes = require('./routes'),
     exphbs = require('express-handlebars'),
     express = require('express'),
     bodyParser = require('body-parser'),
@@ -14,7 +14,7 @@ module.exports = function(app) {
     app.use(bodyParser.json());
     app.use(methodOverride());
     app.use(cookieParser('some-secret-value-here'));
-    //routes(app);
+    routes(app);
     app.use('/public/', express.static(path.join(__dirname, '../public')));
 
     if ('development' === app.get('env')) {
