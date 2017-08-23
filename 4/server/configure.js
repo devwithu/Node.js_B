@@ -8,7 +8,8 @@ var path = require('path'),
     methodOverride = require('method-override'),
     errorHandler = require('errorhandler');
     moment = require('moment'),
-    
+    multer = require('multer');
+
 module.exports = function(app) {
     app.engine('handlebars', exphbs.create({
         defaultLayout: 'main',
@@ -24,6 +25,8 @@ module.exports = function(app) {
     app.set('view engine', 'handlebars');
 
     app.use(morgan('dev'));
+    app.use(multer({ dest: path.join(__dirname, 'public/upload/temp')}));
+    
     app.use(bodyParser.urlencoded({'extended':true}));
     app.use(bodyParser.json());
     app.use(methodOverride());
