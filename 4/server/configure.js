@@ -7,8 +7,22 @@ var path = require('path'),
     morgan = require('morgan'),
     methodOverride = require('method-override'),
     errorHandler = require('errorhandler');
-
+    moment = require('moment'),
+    
 module.exports = function(app) {
+    app.engine('handlebars', exphbs.create({
+        defaultLayout: 'main',
+        layoutsDir: app.get('views') + '/layouts',
+        partialsDir: [app.get('views') + '/partials'],
+        helpers: {
+            timeago: function(timestamp) {
+                console.log(timestamp);
+                return moment(timestamp).startOf('minute').fromNow();
+            }
+        }
+    }).engine);
+    app.set('view engine', 'handlebars');
+
     app.use(morgan('dev'));
     app.use(bodyParser.urlencoded({'extended':true}));
     app.use(bodyParser.json());
